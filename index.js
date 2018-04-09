@@ -4,11 +4,11 @@ const fs = require('fs');
 const dns = require('dns');
 const endOfLine = require('os').EOL;
 const checkInterval = 1000; // Checks the internet connection every 1000ms (1sec)
-app.use('/', express.static('www'));
+app.use('/', express.static(__dirname + '/www'));
 var lastCheckState;
 
 app.get('/', function (req, res) {
-  res.sendFile('www/index.html');
+  res.sendFile(__dirname + '/www/index.html');
 });
 
 app.listen(3652, function () {
@@ -25,7 +25,7 @@ async function checkInternet(){
   const currentState = await isOnline();
   if(lastCheckState != currentState){
     var logMsg = currentState ? 'Connected' : 'Disconnected';
-    fs.appendFileSync('www/net.log', getTimestamp() + ' ' + logMsg + endOfLine);
+    fs.appendFileSync(__dirname + '/www/net.log', getTimestamp() + ' ' + logMsg + endOfLine);
   } 
   lastCheckState = currentState;
 }
