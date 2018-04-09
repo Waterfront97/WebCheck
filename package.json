@@ -1,0 +1,22 @@
+{
+  "name": "webcheck",
+  "version": "1.0.0",
+  "description": "Start logging your internet connection",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Waterfront97/WebCheck.git"
+  },
+  "author": "Joba",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Waterfront97/WebCheck/issues"
+  },
+  "homepage": "https://github.com/Waterfront97/WebCheck#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
