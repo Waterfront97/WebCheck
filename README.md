@@ -15,6 +15,6 @@ Have fun :)
 * `node index.js` starts logging and webserver
 
 *Optional:*
-* Use Systemd/Forever to restart script on exception
+* Use [Systemd](https://gist.github.com/Waterfront97/178fdc5564d0a4dae96190d9111c4e0c)/Forever to restart script on exception
 
 #### Feel free to contribute
