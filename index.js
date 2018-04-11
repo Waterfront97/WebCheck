@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const fs = require('fs');
-const dns = require('dns');
+const net = require('net');
 const endOfLine = require('os').EOL;
 const checkInterval = 1000; // Checks the internet connection every 1000ms (1sec)
 app.use('/', express.static(__dirname + '/www'));
@@ -35,15 +35,18 @@ async function checkInternet(){
  * Returns true on success
  */
 function isOnline(){
-  return new Promise(function(res, rej){
-    dns.lookup('google.de',function(err) {
-        if (err && err.code == "ENOTFOUND") {
-          res(false);
-        } else {
-          res(true);
-        }
-    })
-  });
+  return new Promise(function(res,rej){
+    const sock = new net.Socket();
+    sock.connect(80,'172.217.16.195', function(){ // google.de IP
+        res(true);
+        sock.destroy();
+    });
+
+    sock.on('error', function(err) {
+        res(false);
+    });
+    
+});
 }
 
 /**
