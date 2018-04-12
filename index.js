@@ -6,6 +6,7 @@ const endOfLine = require('os').EOL;
 const checkInterval = 1000; // Checks the internet connection every 1000ms (1sec)
 app.use('/', express.static(__dirname + '/www'));
 var lastCheckState;
+var checking = false;
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/www/index.html');
@@ -15,7 +16,11 @@ app.listen(3652, function () {
   console.info('Webchecker listening on port 3652!');
 });
 
-setInterval(checkInternet, checkInterval);
+setInterval(function(){
+  if(!checking){
+    checkInternet();
+  }
+}, checkInterval);
 
 /**
  * Checks the internet connection
@@ -36,14 +41,17 @@ async function checkInternet(){
  */
 function isOnline(){
   return new Promise(function(res,rej){
+    checking = true;
     const sock = new net.Socket();
     sock.connect(80,'172.217.16.195', function(){ // google.de IP
-        res(true);
-        sock.destroy();
+      checking = false;  
+      res(true);
+      sock.destroy();
     });
 
     sock.on('error', function(err) {
-        res(false);
+      checking = false;
+      res(false);
     });
     
 });
