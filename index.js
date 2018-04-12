@@ -41,19 +41,22 @@ async function checkInternet(){
  */
 function isOnline(){
   return new Promise(function(res,rej){
-    checking = true;
-    const sock = new net.Socket();
-    sock.connect(80,'172.217.16.195', function(){ // google.de IP
-      checking = false;  
-      res(true);
-      sock.destroy();
-    });
+    try {
+      checking = true;
+      const sock = new net.Socket();
+      sock.connect(80,'172.217.16.195', function(){ // google.de IP
+        checking = false;  
+        res(true);
+        sock.destroy();
+      });
 
-    sock.on('error', function(err) {
-      checking = false;
-      res(false);
-    });
-    
+      sock.on('error', function(err) {
+        checking = false;
+        res(false);
+      });
+    } catch (error) {
+      rej(false);
+    }
 });
 }
 
